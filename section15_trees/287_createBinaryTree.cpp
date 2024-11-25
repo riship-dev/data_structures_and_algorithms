@@ -96,11 +96,19 @@ class Tree_Traversals {
                 preorder(current->right_child);
             }
         }
-
+        static void inorder(Tree_Node *current) {
+            if (current) {
+                inorder(current->left_child);
+                printf("%d ", current->data);
+                inorder(current->right_child);
+            }
+        }
 };
 
 int main() {
     Binary_Tree binary_tree_1;
     binary_tree_1.create();
     Tree_Traversals::preorder(binary_tree_1.get_root());
+    cout << endl;
+    Tree_Traversals::inorder(binary_tree_1.get_root());
 }
