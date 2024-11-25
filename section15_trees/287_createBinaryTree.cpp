@@ -87,7 +87,20 @@ class Binary_Tree {
         Tree_Node* get_root() { return root; } 
 };
 
+class Tree_Traversals {
+    public:
+        static void preorder(Tree_Node *current) {
+            if (current) {
+                printf("%d ", current->data);
+                preorder(current->left_child);
+                preorder(current->right_child);
+            }
+        }
+
+};
+
 int main() {
     Binary_Tree binary_tree_1;
     binary_tree_1.create();
+    Tree_Traversals::preorder(binary_tree_1.get_root());
 }
