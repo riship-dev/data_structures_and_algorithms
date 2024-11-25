@@ -103,6 +103,13 @@ class Tree_Traversals {
                 inorder(current->right_child);
             }
         }
+        static void postorder(Tree_Node *current) {
+            if (current) {
+                postorder(current->left_child);
+                postorder(current->right_child);
+                printf("%d ", current->data);
+            }
+        }
 };
 
 int main() {
@@ -111,4 +118,6 @@ int main() {
     Tree_Traversals::preorder(binary_tree_1.get_root());
     cout << endl;
     Tree_Traversals::inorder(binary_tree_1.get_root());
+    cout << endl;
+    Tree_Traversals::postorder(binary_tree_1.get_root());
 }
