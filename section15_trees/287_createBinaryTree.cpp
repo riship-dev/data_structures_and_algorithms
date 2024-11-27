@@ -180,10 +180,26 @@ class Iterative_Tree_Traversals {
                 }
             }
         }
+        static void levelorder(Tree_Node *current) {
+            Queue queue;
+            printf("%d ", current->data);
+            queue.enqueue(current);
+            while (!queue.is_empty()) {
+                current = queue.dequeue();
+                if (current->left_child != nullptr) {
+                    printf("%d ", current->left_child->data);
+                    queue.enqueue(current->left_child);
+                }
+                if (current->right_child != nullptr) {
+                    printf("%d ", current->right_child->data);
+                    queue.enqueue(current->right_child);
+                }
+            }
+        }
 };
 
 int main() {
     Binary_Tree binary_tree_1;
     binary_tree_1.create();
-    Iterative_Tree_Traversals::preorder(binary_tree_1.get_root());
+    Iterative_Tree_Traversals::levelorder(binary_tree_1.get_root());
 }
