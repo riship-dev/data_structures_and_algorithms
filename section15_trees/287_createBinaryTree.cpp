@@ -125,7 +125,7 @@ class Binary_Tree {
                 }
             }
         }
-        Tree_Node* get_root() { return root; } 
+        Tree_Node* get_root_address() { return root; }
 };
 
 class Recursive_Tree_Traversals {
@@ -197,9 +197,29 @@ class Iterative_Tree_Traversals {
             }
         }
 };
+class Binary_Tree_Utility {
+    public:
+        static int count(Tree_Node *current) {
+            int count_left_child, count_right_child;
+            if (current != nullptr) {
+                count_left_child = count(current->left_child);
+                count_right_child = count(current->right_child);
+                return 1 + count_left_child + count_right_child;
+            }
+            return 0;
+        }
+        static int height(Tree_Node *root) {
+            int height_left_child, height_right_child;
+            if (root == nullptr) return 0;
+            height_left_child = height(root->left_child);
+            height_right_child = height(root->right_child);
+            if (height_left_child > height_right_child) return 1 + height_left_child;
+            return 1 + height_right_child;
+        }
+};
 
 int main() {
     Binary_Tree binary_tree_1;
     binary_tree_1.create();
-    Iterative_Tree_Traversals::levelorder(binary_tree_1.get_root());
+    cout << Binary_Tree_Utility::count(binary_tree_1.get_root_address());
 }
