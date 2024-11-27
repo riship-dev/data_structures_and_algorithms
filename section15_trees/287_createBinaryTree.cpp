@@ -54,6 +54,47 @@ class Queue {
             cout << endl;
         }
 };
+class Stack {
+    private:
+        class Node {
+            public:
+                Tree_Node *treeNode;
+                Node *next;
+                Node(Tree_Node *treeNode) : treeNode(treeNode), next(nullptr) {}
+        };
+
+        Node *top;
+
+    public:
+        Stack() : top(nullptr) {}
+        ~Stack() {
+            Node *current = top, *toDelete = nullptr;
+            while (current) {
+                toDelete = current;
+                current = current->next;
+                delete toDelete;
+            }
+        }
+
+        void push(Tree_Node *item) {
+            Node *newNode = new Node(item);
+            if (is_empty()) {
+                top = newNode;
+                return;
+            }
+            newNode->next = top;
+            top = newNode;
+        }
+        Tree_Node* pop() {
+            if (is_empty()) return nullptr;
+            Node *toPop = top;
+            top = top->next;
+            Tree_Node *poppedItem = toPop->treeNode;
+            delete toPop;
+            return poppedItem;
+        }
+        bool is_empty() { return top == nullptr; }
+};
 
 class Binary_Tree {
     private:
@@ -87,7 +128,7 @@ class Binary_Tree {
         Tree_Node* get_root() { return root; } 
 };
 
-class Tree_Traversals {
+class Recursive_Tree_Traversals {
     public:
         static void preorder(Tree_Node *current) {
             if (current) {
@@ -111,13 +152,38 @@ class Tree_Traversals {
             }
         }
 };
+class Iterative_Tree_Traversals {
+    public:
+        static void preorder(Tree_Node *current) {
+            Stack stack;
+            while (current != nullptr || !stack.is_empty()) {
+                if (current != nullptr) {
+                    printf("%d ", current->data);
+                    stack.push(current);
+                    current = current->left_child;
+                } else {
+                    current = stack.pop();
+                    current = current->right_child;
+                }
+            }
+        }
+        static void inorder(Tree_Node *current) {
+            Stack stack;
+            while (current != nullptr || !stack.is_empty()) {
+                if (current != nullptr) {
+                    stack.push(current);
+                    current = current->left_child;
+                } else {
+                    current = stack.pop();
+                    printf("%d ", current->data);
+                    current = current->right_child;
+                }
+            }
+        }
+};
 
 int main() {
     Binary_Tree binary_tree_1;
     binary_tree_1.create();
-    Tree_Traversals::preorder(binary_tree_1.get_root());
-    cout << endl;
-    Tree_Traversals::inorder(binary_tree_1.get_root());
-    cout << endl;
-    Tree_Traversals::postorder(binary_tree_1.get_root());
+    Iterative_Tree_Traversals::preorder(binary_tree_1.get_root());
 }
